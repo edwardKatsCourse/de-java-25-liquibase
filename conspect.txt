@@ -1,0 +1,81 @@
+    FRONTEND     |     BACKEND     |     DATABASE
+
+JPA
+- select
+- insert
+- update
+- delete
+
+Liquibase
+create table
+drop table       -> delete table
+truncate table   -> delete all from table
+alter table
+add/remove index
+add/remove constraint
+
+
+
+-------------------------------
+
+local -> dev -> staging -> production
+
+2 parts
+1. application.properties
+2. changelog.xml
+
+
+-------------------------------
+
+Liquibase guarantees:
+- each changeset executed once
+- no history rewrite
+
+
+changeset - 1
+create table car  |
+                  |  =======> hash/checksum =======> Database
++ 3 columns       |
+
+changeset - 2
++ 1 column
+
+------------------------
+
+
+boolean isPassed;
+
+- bool/boolean
+-------------------
+- bit
+- int(1)
+- int(16) -> short/real
+- int(32) -> int
+- int(64) -> long
+- bigint  -> BigInteger
+
+
+-------------------
+Foreign Key Constraint Naming
+
+fromColumn_fromTable_toColumn_toTable
+fromTable_fromColumn_toTable_toColumn
+
+
+Liquibase Tables
+database change log
+-> all changesets
+- id
+- author
+- execution date
+- hashsum
+
+database change log lock
+
+server-1                    locked=false
+            =======>
+server-2                        locked=true
+            =======>
+server-3                    locked=false
+
+

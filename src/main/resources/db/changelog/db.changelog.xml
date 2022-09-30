@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1" author="tel-ran">
+        <createTable tableName="company" >
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column type="varchar(255)" name="company_name" >
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="employee">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="fullname" type="varchar(255)"/>
+
+            <column name="company_id" type="bigint">
+
+                <constraints
+                        foreignKeyName="company_id_employee_id_company"
+                        referencedTableName="company"
+                        referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="lease_car">
+            <column type="bigint" name="id" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="employee_id" type="bigint">
+                <constraints foreignKeyName="employee_id_lease_car_id_employee"
+                             referencedTableName="employee"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="2" author="tel-ran">
+        <addColumn tableName="lease_car">
+            <column name="brand" type="varchar(255)">
+
+            </column>
+        </addColumn>
+
+        <sql>
+            update lease_car set brand = 'none' where id > 0
+        </sql>
+
+        <addNotNullConstraint tableName="lease_car" columnName="brand"/>
+    </changeSet>
+
+</databaseChangeLog>
